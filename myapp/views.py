@@ -7,6 +7,12 @@ from rest_framework.views import APIView
 from myapp.documents import ChatGPTTweetsDocument
 from myapp.models import ChatGPTTweets
 from myapp.serializers import ChatGPTTweetsSerializer
+from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
+from django_elasticsearch_dsl_drf.filter_backends import (
+    FilteringFilterBackend,
+    OrderingFilterBackend,
+    DefaultOrderingFilterBackend,
+)
 
 
 class Search(APIView):
@@ -26,6 +32,37 @@ class Search(APIView):
                 for result in results
             ]
         )
+
+
+class ChatGPTTweetsDocumentView(DocumentViewSet):
+    document = ChatGPTTweetsDocument
+    serializer_class = ChatGPTTweetsSerializer
+    lookup_field = 'id'
+    filter_backends = [
+        FilteringFilterBackend,
+        OrderingFilterBackend,
+        DefaultOrderingFilterBackend,
+    ]
+
+    # Define search fields
+    search_fields = (
+        'content',
+        'username',
+    )
+
+    # Define filter fields
+    filter_fields = {
+        'username': 'username.raw',
+        'id': 'id.raw',
+    }
+
+    # Define ordering fields
+    ordering_fields = {
+        'date': 'date',
+    }
+
+    # Specify default ordering
+    ordering = ('-date',)
 
 
 class ChatGPTTweetsView(ListCreateAPIView):
