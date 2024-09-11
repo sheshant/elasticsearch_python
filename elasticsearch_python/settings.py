@@ -134,10 +134,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ELASTICSEARCH_DSL = {
     'default': {
         'hosts': HOST,
-        'http_auth': (USERNAME, PASSWORD)
+        'http_auth': (USERNAME, PASSWORD),
+        "verify_certs": False
     },
 }
 
+
+ELASTICSEARCH_INDEX_NAMES = {
+    'chatgpt_tweets_index': 'chatgpt_tweets',
+}
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

@@ -11,7 +11,7 @@ from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from django_elasticsearch_dsl_drf.filter_backends import (
     FilteringFilterBackend,
     OrderingFilterBackend,
-    DefaultOrderingFilterBackend,
+    DefaultOrderingFilterBackend, SearchFilterBackend,
 )
 
 
@@ -42,6 +42,7 @@ class ChatGPTTweetsDocumentView(DocumentViewSet):
         FilteringFilterBackend,
         OrderingFilterBackend,
         DefaultOrderingFilterBackend,
+        SearchFilterBackend,
     ]
 
     # Define search fields
